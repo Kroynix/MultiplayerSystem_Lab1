@@ -8,6 +8,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.IO;
 
 #region Assignment Instructions
 
@@ -75,16 +76,71 @@ static public class AssignmentPart1
 
     static public void SavePartyButtonPressed()
     {
+
+        // Write save data to file
+        StreamWriter sw = new StreamWriter(Application.dataPath + Path.DirectorySeparatorChar + "OurBelovedSaveFile.txt");
         foreach (PartyCharacter pc in GameContent.partyCharacters)
         {
-            Debug.Log("PC class id == " + pc.classID);
+            //Debug.Log("PC class id == " + pc.classID);
+            ///
+            /// We Saved
+            ///
+            ///
+        //    Debug.Log(pc.classID + ","  +
+        //     pc.health + ","  +
+        //     pc.mana + ","  +
+        //     pc.strength + ","  +
+        //     pc.agility+ ","  +
+        //     pc.wisdom);
+
+        
+          sw.WriteLine (pc.classID + ","  +
+            pc.health + ","  +
+            pc.mana + ","  +
+            pc.strength + ","  +
+            pc.agility+ ","  +
+            pc.wisdom);
+
+           
+          // foreach(int i in pc.equipment)
+          // {
+          //     Debug.Log(i);
+          // }
+            
+
         }
+        sw.Close();
     }
 
     static public void LoadPartyButtonPressed()
     {
+        string path = Application.dataPath + Path.DirectorySeparatorChar + "OurBelovedSaveFile.txt";
+        
+        GameContent.partyCharacters.Clear();
 
-        //GameContent.partyCharacters.Clear();
+        if(File.Exists(path))
+        {
+            string line = "";
+            StreamReader sr = new StreamReader(path);
+
+            while ((line = sr.ReadLine()) != null)
+            {
+                string[] csv = line.Split(',');
+                Debug.Log(line);
+
+
+                PartyCharacter pc = new PartyCharacter(int.Parse(csv[0]),int.Parse(csv[1]),int.Parse(csv[2]),int.Parse(csv[3]),
+                int.Parse(csv[4]),int.Parse(csv[5]));
+        
+
+
+                GameContent.partyCharacters.AddLast(pc);
+            }
+        }
+
+
+
+
 
         GameContent.RefreshUI();
 
@@ -94,6 +150,22 @@ static public class AssignmentPart1
 
 
 #endregion
+
+// What do we need to do in small steps, to save/load our party data?
+// (DONE) Figure how we are formatting our data 
+// (DONE)Where are we saving data?  - Application.dataPath
+// (DONE)Write Data into a text file
+// Loading Party
+
+
+//
+//
+// ... Loading Stuffs
+// Find File
+// Open File
+// Instantiate Reader
+// 
+// Manage save Version???
 
 
 #region Assignment Part 2
