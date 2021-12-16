@@ -76,8 +76,9 @@ public partial class PartyCharacter
 static public class AssignmentPart1
 {
 
-    const int PartyMemberSignifier = 1;
-    const int EquipmentSignifier = 2; 
+
+    const int PartyCharacterSaveDataSignifier = 0;
+    const int PartyCharacterEquipmentSaveDataSignifier = 1;
 
     static string path = Application.dataPath + Path.DirectorySeparatorChar + "PartySavedData.txt";
 
